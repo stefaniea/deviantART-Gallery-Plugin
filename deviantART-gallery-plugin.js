@@ -26,6 +26,8 @@ function deviantARTGalleryPlugin(username, id, ratio) {
                 deviations.push(object);
             }
 
+            gridview(deviations);
+
             // async function is complete, move on
             var images = '';
 
@@ -45,6 +47,35 @@ function deviantARTGalleryPlugin(username, id, ratio) {
   http://jalproductions.co.uk/
   https://github.com/jamesl1001/simpleslider
 */
+
+//input is array of images - consisting of title, description, and image (src)
+function gridview(imgs) {
+var grid = document.createElement("ul");
+var gallery = document.getElementById("deviantART-gallery");
+gallery.appendChild(grid);
+
+grid.setAttribute("class", "grid cs-style-1");
+    for(var i = 0; i < imgs.length; i++) {
+        var li = document.createElement("li"),
+            figure = document.createElement("figure"),
+            img = document.createElement("img"),
+            caption = document.createElement("figcaption"),
+            title = document.createElement("h3"),
+            description = document.createElement("span");
+            link = document.createElement("a");
+        
+        li.appendChild(figure);
+        figure.appendChild(img);
+        figure.appendChild(caption);
+        caption.appendChild(title);
+        caption.appendChild(description);
+        caption.appendChild(link);
+        img.setAttribute("src", imgs[i].image);
+        title.innerHTML = imgs[i].title;
+        description.innerHTML = imgs[i].description;
+        grid.appendChild(li);
+    }
+}
 
 function simpleslider(ssR, ssF, ssD, ssP) {
     // Setup variables
