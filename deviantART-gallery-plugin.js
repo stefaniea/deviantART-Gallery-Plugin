@@ -51,10 +51,10 @@ function deviantARTGalleryPlugin(username, id, ratio) {
 //input is array of images - consisting of title, description, and image (src)
 function gridview(imgs) {
 var grid = document.createElement("ul");
-var gallery = document.getElementById("deviantART-gallery");
+var gallery = document.getElementById("grid-div");
 gallery.appendChild(grid);
 
-grid.setAttribute("class", "grid cs-style-1");
+grid.setAttribute("class", "grid cs-style-2");
     for(var i = 0; i < imgs.length; i++) {
         var li = document.createElement("li"),
             figure = document.createElement("figure"),
@@ -62,7 +62,9 @@ grid.setAttribute("class", "grid cs-style-1");
             caption = document.createElement("figcaption"),
             title = document.createElement("h3"),
             description = document.createElement("span");
-            link = document.createElement("a");
+            link = document.createElement("button");
+            link.setAttribute("value", i);
+            title.setAttribute("class", "img-title");
         
         li.appendChild(figure);
         figure.appendChild(img);
@@ -73,31 +75,129 @@ grid.setAttribute("class", "grid cs-style-1");
         img.setAttribute("src", imgs[i].image);
         title.innerHTML = imgs[i].title;
         description.innerHTML = imgs[i].description;
+        link.innerHTML = "Take a Look";
+        classie.add( link, 'md-trigger' );
+        classie.add(link, "open-modal");
+        //link.setAttribute("href", "");
+        link.setAttribute("data-modal", "modal-1");
         grid.appendChild(li);
     }
+
+  /* document.getElementsByClassName("open-modal").onclick = function() {
+        clearCurrent();
+        console.log("ONCLICK i is" + i);
+        goToFrame(parseInt(link.getAttribute("value")));
+        addCurrent(ssCurrentFrame);
+    };*/
+
+    init();
+
 }
 
-function simpleslider(ssR, ssF, ssD, ssP) {
-    // Setup variables
-    var ss              = document.getElementById('deviantART-gallery'),
-        ssWrapper       = document.getElementById('ss__wrapper'),
-        ssControls      = document.getElementById('ss__controls'),
-        ssPrev          = document.getElementById('ss__prev'),
-        ssNext          = document.getElementById('ss__next'),
-        ssDots          = document.getElementById('ss__dots'),
-        ssImages        = ssWrapper.getElementsByTagName('img'),
-        ssFrames        = ssF || ssImages.length,
-        ssRatio         = ssR,
-        ssDirectory     = ssD,
-        ssPrefix        = ssP,
-        ssCurrentFrame  = 0,
-        ssDotsWidth     = ssFrames * 20,
-        ssWidth         = 0,
-        ssHeight        = 0;
+function init() {
 
+        
+        var overlay = document.querySelector( '.md-overlay' );
+
+        [].slice.call( document.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
+
+            var modal = document.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
+                close = modal.querySelector( '.md-close' );
+
+            function removeModal( hasPerspective ) {
+                classie.remove( modal, 'md-show' );
+
+                if( hasPerspective ) {
+                    classie.remove( document.documentElement, 'md-perspective' );
+                }
+            }
+
+            function removeModalHandler() {
+                removeModal( classie.has( el, 'md-setperspective' ) ); 
+            }
+
+            el.addEventListener( 'click', function( ev ) {
+                classie.add( modal, 'md-show' );
+                overlay.removeEventListener( 'click', removeModalHandler );
+                overlay.addEventListener( 'click', removeModalHandler );
+
+                //change current frame in slideshow:
+                clearCurrent(); 
+                var n = parseInt(el.getAttribute("value"));
+                goToFrame(n);
+                addCurrent(ssCurrentFrame);
+
+                //change modal title:
+                var modalTitle = document.getElementById("modal-title");
+                var frameTitle = document.getElementsByClassName("img-title")[n];
+                modalTitle.innerHTML = frameTitle.innerHTML;
+
+                if( classie.has( el, 'md-setperspective' ) ) {
+                    setTimeout( function() {
+                        classie.add( document.documentElement, 'md-perspective' );
+                    }, 25 );
+                }
+            });
+
+            close.addEventListener( 'click', function( ev ) {
+                ev.stopPropagation();
+                removeModalHandler();
+
+            });
+
+        } );
+
+    }
+
+// Setup variables
+
+        // Update current frame
+    function goToFrame(n) {
+        console.log("go to frame" + n);
+        if(n >= ssFrames) {
+            ssCurrentFrame = 0;
+        } else if(n < 0) {
+            ssCurrentFrame = ssFrames - 1;
+        } else {
+            ssCurrentFrame = n;
+        }
+    }
+    // Add current class to first frame
+    function addCurrent(n) {
+        ssImages[n].className += ' current';
+        ssAllDots[n].className += ' current';
+    }
+
+    // Clear all current classes
+    function clearCurrent() {
+        for(var i = 0; i < ssFrames; i++) {
+            ssImages[i].className = ssImages[i].className.replace(/ current/, '');
+            ssAllDots[i].className = ssAllDots[i].className.replace(/ current/, '');
+        }
+    }
+var ss, ssWrapper, ssControls, ssPrev, ssNext, ssDots, ssImages, ssFrames, ssRatio, ssDirectory, ssPrevix, ssCurrentFrame;
+var ssDotsWidth, ssWidth, ssHeight;
+function simpleslider(ssR, ssF, ssD, ssP) {
+        ss              = document.getElementById('deviantART-gallery');
+        ssWrapper       = document.getElementById('ss__wrapper');
+        ssControls      = document.getElementById('ss__controls');
+        ssPrev          = document.getElementById('ss__prev');
+        ssNext          = document.getElementById('ss__next');
+        ssDots          = document.getElementById('ss__dots');
+        ssImages        = ssWrapper.getElementsByTagName('img');
+        ssFrames        = ssF || ssImages.length;
+        ssRatio         = ssR;
+        ssDirectory     = ssD;
+        ssPrefix        = ssP;
+        ssCurrentFrame  = 0;
+        ssDotsWidth     = ssFrames * 20;
+        ssWidth         = 0;
+        ssHeight        = 0;
+    
     // Calculate aspect ratio
     var ssRatioSplit      = ssRatio.split(':');
     var ssRatioPercentage = ssRatioSplit[1] / ssRatioSplit[0] * 100;
+
 
     // Set dimensions
     ss.style.paddingBottom = ssWrapper.style.paddingBottom = ssRatioPercentage + '%';
@@ -168,30 +268,6 @@ function simpleslider(ssR, ssF, ssD, ssP) {
         }
     }
 
-    // Add current class to first frame
-    function addCurrent(n) {
-        ssImages[n].className += ' current';
-        ssAllDots[n].className += ' current';
-    }
-
-    // Clear all current classes
-    function clearCurrent() {
-        for(var i = 0; i < ssFrames; i++) {
-            ssImages[i].className = ssImages[i].className.replace(/ current/, '');
-            ssAllDots[i].className = ssAllDots[i].className.replace(/ current/, '');
-        }
-    }
-
-    // Update current frame
-    function goToFrame(n) {
-        if(n >= ssFrames) {
-            ssCurrentFrame = 0;
-        } else if(n < 0) {
-            ssCurrentFrame = ssFrames - 1;
-        } else {
-            ssCurrentFrame = n;
-        }
-    }
 
     // Always initialise first image as .current
     addCurrent(0);
@@ -261,4 +337,5 @@ function simpleslider(ssR, ssF, ssD, ssP) {
         getSSDimensions();
         calculateCentre();
     }
+
 }
