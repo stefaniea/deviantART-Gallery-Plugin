@@ -22,7 +22,7 @@ body, html { font-size: 100%; padding: 0; margin: 0; }
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	color: #fff;
-	background: #e74c3c;
+	background: #4F0A23;
 }
 
 a {
@@ -105,7 +105,7 @@ a:active {
 }
 
 .codrops-top a:hover {
-	color: #e74c3c;
+	color: rgb(200, 200, 200);
 	background: rgba(255,255,255,0.6);
 }
 
@@ -141,7 +141,7 @@ a:active {
 button {
 	border: none;
 	padding: 0.6em 1.2em;
-	background: #c0392b;
+	background: #4D4749;
 	color: #fff;
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	font-size: 1em;
@@ -151,10 +151,12 @@ button {
 	display: inline-block;
 	margin: 3px 2px;
 	border-radius: 2px;
+	float: right;
+	margin-top: 1%;
 }
 
 button:hover {
-	background: #A5281B;
+	background: #4F0A23;
 }
 
 @media screen and (max-width: 46.0625em) {
