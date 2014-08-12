@@ -98,15 +98,23 @@
                 <a href="#st-panel-6">Contact</a>
                 
             <div class="st-scroll">
-                    
-          <section class="st-panel" id="st-panel-1" style="background-image: url(images/pattern.png), url(images/ruins.jpg); padding: 55px;">
+         <section id="st-panel-1" style="background-image: url(images/pattern.png);">
+            <div style="height: 100%; width: 100%; z-index: 999 !important; background-image: url(images/pattern.png);"></div>
+            <h1 style="z-index: 999; position: absolute; top: 1%; left: 1%">Stefanie Alfonso</h1>
+            <div id="wrap" style="background-image: url(images/pattern.png);">
+             <img class="bgfade" style="background-image: url(images/pattern.png), url(images/wireframe2.jpeg)" src="images/pattern.png"/>
+            <img class="bgfade" style="background-image: url(images/pattern.png), url(images/ruins.jpg)" src="images/pattern.png"/>
+            <img class="bgfade" style="background-image: url(images/pattern.png), url(images/dino.jpg)" src="images/pattern.png"/>
+             <img class="bgfade" style="background-image: url(images/pattern.png), url(images/staircase_render.jpg)" src="images/pattern.png"/>
+
+       
         <div>
             <div class="header">
                 <div class="clr"></div>
             </div>
-            <h1>Stefanie Alfonso</h1>
+           
             <div class="content">
-                <ul class="bmenu">
+                <ul class="bmenu" style="z-index: 100;">
                     <li><a href="#" value="#st-panel-2">About</a></li>
                     <li><a href="#" value="#st-panel-3">3D Modeling & Animations</a></li>
                     <!-- <li><a href="#">Web Design</a></li>-->
@@ -117,6 +125,8 @@
                     <li><a href="#" value="#st-panel-6">Contact</a></li>
                 </ul>
             </div>
+
+             </div>
         </div>
                     </section>
                     
@@ -213,6 +223,18 @@
         var allAlbumId = '2990191';
        // setCurrentAlbum(codeAlbumId, "code");
       //  setCurrentAlbum(artAlbumId);
+      $(window).load(function(){
+$('img.bgfade').hide();
+var dg_H = $(window).height();
+var dg_W = $(window).width();
+$('#wrap').css({'height':dg_H,'width':dg_W});
+function anim() {
+    $("#wrap img.bgfade").first().appendTo('#wrap').fadeOut(1500);
+    $("#wrap img").first().fadeIn(1500);
+    setTimeout(anim, 6000);
+}
+anim();})
+$(window).resize(function(){window.location.href=window.location.href})
        
         </script>
     </body>

@@ -85,7 +85,7 @@ getVideos();
             src = src.substring(2, src.length);
             src = "https://" + src;
             $('#' + embed + ' iframe').attr("src", src);
-            var description = document.createElement("div");
+            var description = document.createElement("p");
             description.innerHTML = video.description;
             $('#' + embed).append(description);
         }
@@ -207,8 +207,20 @@ function initVid(videos) {
                     titleTag = "img-title-code"
                 }*/
                 var frames =  document.getElementsByClassName(titleTag);
-                console.log("frames length" + frames.length + " n is" + n + " modal title is" + modaltitleid);
-                var frameTitle = frames[frames.length - n - 1];
+                //console.log("frames length" + frames.length + " n is" + n + " modal title is" + modaltitleid);
+                var index = frames.length - n - 1;
+                if(n < numVideos[0]) {
+                    var lengthSecond = frames.length - numVideos[0];
+                    index = (lengthSecond - n +1);
+                }
+                else {
+        
+                    index = frames.length - n + numVideos[0] -1;
+                   /* var lengthSecond = frames.length - numVideos[0];
+                    var secondIndex = n - numVideos[0];
+                    index = numVideos[0] + (lengthSecond - secondIndex);*/
+                }
+                var frameTitle = frames[index];
                 modalTitle.innerHTML = frameTitle.innerHTML;
 
                 if( classie.has( el, 'md-setperspective' ) ) {

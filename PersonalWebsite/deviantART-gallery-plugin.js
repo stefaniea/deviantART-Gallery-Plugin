@@ -54,7 +54,7 @@ function deviantARTGalleryPlugin(username, id, ratio) {
 function accordianView(imgs) {
 //var grid = document.createElement("ul");
 var gallery = document.getElementById("grid-div");
-gallery.setAttribute("style", "max-height: 400px");
+ gallery.setAttribute("style", "max-height: 400px");
 //gallery.appendChild(grid);
 var figurePrev;
 //grid.setAttribute("class", "grid cs-style-2");
