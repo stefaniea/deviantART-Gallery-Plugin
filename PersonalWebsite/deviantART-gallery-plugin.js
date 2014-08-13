@@ -1,9 +1,11 @@
+var deviations = [];
+
 function deviantARTGalleryPlugin(username, id, ratio) {
     // Inject the gallery markup
     var gallery = document.getElementById('deviantART-gallery');
     gallery.innerHTML = '<div id="ss__wrapper"></div><div id="ss__controls"><div id="ss__prev"><div id="ss__prevChev"></div></div><div id="ss__next"><div id="ss__nextChev"></div></div><div id="ss__dots"></div></div></div>';
 
-    var deviations = [];
+    
 
     (function queryYQL() {
         // thanks http://stackoverflow.com/a/7369516/1696757
@@ -22,6 +24,7 @@ function deviantARTGalleryPlugin(username, id, ratio) {
 
                 object.title = items[i].title[0];
                 object.image = items[i].content.url;
+                object.desc = items[i].description[0].content;
 
                 deviations.push(object);
             }
@@ -96,6 +99,7 @@ var figurePrev;
             link = document.createElement("button");
             link.setAttribute("value", i);*/
             captionSpan.setAttribute("class", "img-title");
+           // var descriptionHolder = document.createElement();
         
         /*li.appendChild(figure);
         figure.appendChild(img);
@@ -106,7 +110,7 @@ var figurePrev;
         img.setAttribute("src", imgs[i].image);*/
         img.setAttribute("src", imgs[i].image)
         captionSpan.innerHTML = imgs[i].title;
-     //   description.innerHTML = imgs[i].description;
+        //description.innerHTML = imgs[i].desc;
         link.innerHTML = "Take a Look";
         classie.add(link, 'md-trigger' );
         classie.add(link, "open-modal");
@@ -167,6 +171,8 @@ function init() {
                 var frames = document.getElementsByClassName("img-title");
                 var frameTitle = frames[frames.length-n-1];
                 modalTitle.innerHTML = frameTitle.innerHTML;
+                var modalContent = document.getElementById("art-description");
+                modalContent.innerHTML = deviations[n].desc;
 
                 if( classie.has( el, 'md-setperspective' ) ) {
                     setTimeout( function() {
@@ -197,6 +203,9 @@ function init() {
         } else {
             ssCurrentFrame = n;
         }
+
+     var modalContent = document.getElementById("art-description");
+     modalContent.innerHTML = deviations[ssCurrentFrame].desc;
     }
     // Add current class to first frame
     function addCurrent(n) {
@@ -321,6 +330,7 @@ function simpleslider(ssR, ssF, ssD, ssP) {
         clearCurrent();
         goToFrame(ssCurrentFrame - 1);
         addCurrent(ssCurrentFrame);
+
     }
 
     function clickNext() {

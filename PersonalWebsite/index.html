@@ -44,8 +44,9 @@
                             <div class="md-content">
                                 <h3 id="modal-title">Modal Dialog</h3>
                                 <div>
-                                   <p></p>
+                                   
                                     <div id="deviantART-gallery"></div>
+                                    <p id="art-description"></p>
                                     </ul>
                                     <button class="md-close">Close me!</button>
                                 </div>
@@ -133,11 +134,14 @@
                     <section class="st-panel st-color" id="st-panel-2">
 
                         <div class="st-deco" data-icon="2"></div>
+                        
                         <h2>About</h2>
+                        
                         <p>
                     Hi there! My name is Stef, and I'm a junior at the <a href="http://upenn.edu">University of Pennsylvania </a>studying digital media design. 
                     <a href="http://cg.cis.upenn.edu/dmd_program.html"> Digital media design</a> is a major that integrates computer science with art, design, and communications.
                     Besides art and programming, I enjoy music, and I love to play ukulele and clarinet in my spare time.</p>
+                  <h2><img class="panda" src="images/redpandaheart.png"/></h2>
                     </section>
                     
                     <section class="st-panel" id="st-panel-3">
@@ -168,6 +172,7 @@
                         <div class="st-deco" data-icon="M"></div>
                         <h2>Contact</h2>
                         <p id ="links" style="font-size: 32px;"><a href="mailto:astef@seas.upenn.edu"> Email</a> | <a target="_blank" href="https://www.linkedin.com/pub/stefanie-alfonso/62/509/945">LinkedIn</a> | <a target="_blank" href="https://github.com/stefaniea"> Github </a> | <a target="_blank" href="https://vimeo.com/user7720451">Vimeo</a> | <a target="_blank" href="https://drive.google.com/file/d/0B4ZBZOYYKBzEOUlqM2dxcEQzSEU/edit?usp=sharing"> Resume </a></p>
+                            <h2><img id="squirrel" src="images/squirrel_jumpa.gif"/></h2>
                     </section>
 
                 </div><!-- // st-scroll -->
@@ -221,8 +226,36 @@
         var artAlbumId = '2990189';
         var codeAlbumId = '2990185';
         var allAlbumId = '2990191';
-       // setCurrentAlbum(codeAlbumId, "code");
-      //  setCurrentAlbum(artAlbumId);
+
+         var margin = 500;
+        animateSquirrel();
+    function animateSquirrel() {
+        console.log("animating");
+    $("#squirrel").animate({"margin-left" : margin}, 5000, "linear", function() {
+      console.log("callback");
+        margin = margin*-1;
+
+    if(margin > 0) {
+        $('#squirrel').css({ '-moz-transform': 'scaleX(1)',
+        '-o-transform' : 'scaleX(1)',
+        '-webkit-transform': 'scaleX(1)',
+        'transform' : 'scaleX(1)',
+        'filter': 'FlipH',
+        '-ms-filter' : '"FlipH"'});
+    }
+
+    else {
+         $('#squirrel').css({ '-moz-transform': 'scaleX(-1)',
+        '-o-transform' : 'scaleX(-1)',
+        '-webkit-transform': 'scaleX(-1)',
+        'transform' : 'scaleX(-1)',
+        'filter': 'FlipH',
+        '-ms-filter' : '"FlipH"'});
+    }
+        setTimeout(animateSquirrel, 1000);
+    }
+    );
+}
       $(window).load(function(){
 $('img.bgfade').hide();
 var dg_H = $(window).height();
@@ -238,4 +271,18 @@ $(window).resize(function(){window.location.href=window.location.href})
        
         </script>
     </body>
+    <style>
+    .panda {
+        height: 100px;
+        width: auto;
+        padding: 10px;
+        margin-top: 20%;
+    }
+    #squirrel {
+        height: 125px;
+        margin-top: 12%;
+        margin-left: -500px;
+        opacity: .7;
+    }
+    </style>
 </html>
