@@ -1,4 +1,4 @@
-deviantART-Gallery-Plugin
+deviantART-Gallery-Plugin (original)
 =========================
 
 Embed your deviantART gallery with this Javascript plugin.
@@ -34,3 +34,19 @@ The **aspect ratio** sets the dimensions of the gallery to ensure that it remain
 ```html
 <div id="deviantART-gallery"></div>
 ```
+
+####Vimeo-Gallery-Plugin (original)####
+
+1 - Link to `vimeo-gallery-plugin.js` in the scripts before the closing '<body>' tag
+2 - in a `<script>` tag after linking `vimeo-gallery-plugin.js` call the function:
+`changeCurrentAlbum('albumid');` with your vimeo album's id
+3 - put `<div id="embed"></div>` where you'd like the videos to appear
+4 - use vimeo.html as a template
+
+####Personal Website####
+Example of deviant art and vimeo gallery plugins together for personal website (you'll never have to update your porfolio websites again! yay)
+
+
+
+
+
